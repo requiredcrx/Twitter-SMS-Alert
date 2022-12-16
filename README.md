@@ -2,9 +2,9 @@
 Here is a complete Python code that will send an SMS alert to your phone using Twilio when the Twitter account "@hacksultan" makes a new tweet: You can replace the twitter handle to get alert from other twitter account.
 
 ## Requirements
-+ A Twitter Developer account and a new application to get access to the Twitter API
-+ tweepy, a Python library for interacting with the Twitter API
-+ A Twilio account and a phone number to send SMS messages
++ A [Twitter Developer account](https://developer.twitter.com/) and a new application to get access to the Twitter API
++ [tweepy,](https://github.com/tweepy/tweepy) a Python library for interacting with the Twitter API
++ A [Twilio account](https://www.twilio.com/) and a phone number to send SMS messages
 
 ## Setup
 * Clone this repository and navigate to the project directory:
