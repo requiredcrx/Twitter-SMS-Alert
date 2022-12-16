@@ -1,0 +1,42 @@
+import tweepy
+from twilio.rest import Client
+
+# Set up your Twitter API keys and access tokens
+consumer_key = "YOUR_CONSUMER_KEY"
+consumer_secret = "YOUR_CONSUMER_SECRET"
+access_token = "YOUR_ACCESS_TOKEN"
+access_token_secret = "YOUR_ACCESS_TOKEN_SECRET"
+
+# Authenticate your application using the API keys and access tokens
+auth = tweepy.OAuth1Authentication(consumer_key, consumer_secret, access_token, access_token_secret)
+
+# Set up your Twilio API keys and access tokens
+twilio_account_sid = "YOUR_TWILIO_ACCOUNT_SID"
+twilio_auth_token = "YOUR_TWILIO_AUTH_TOKEN"
+twilio_phone_number = "YOUR_TWILIO_PHONE_NUMBER"
+
+# Set up a function to check for new tweets every few minutes
+def check_for_new_tweets():
+    # Get the latest tweet from the specified Twitter account
+    latest_tweet = tweepy.API(auth).user_timeline(screen_name="hacksultan", count=1)[0]
+
+    # Check if the latest tweet is different from the previous one
+    if latest_tweet != previous_tweet:
+        # Send an SMS alert using Twilio
+        client = Client(twilio_account_sid, twilio_auth_token)
+        message = client.messages.create(
+            to="YOUR_PHONE_NUMBER",
+            from_=twilio_phone_number,
+            body="New tweet from @hacksultan: " + latest_tweet.text
+        )
+
+# Initialize the previous_tweet variable with the latest tweet from the specified Twitter account
+previous_tweet = tweepy.API(auth).user_timeline(screen_name="hacksultan", count=1)[0]
+
+# Set up a while loop to call the check_for_new_tweets function every 5 minutes
+while True:
+    try:
+        check_for_new_tweets()
+    except Exception as e:
+        print("An error occurred:", e)
+    time.sleep(300) # Sleep for 5 minutes
